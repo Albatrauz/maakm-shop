@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>MAAKM.shop — Design Pattern Library</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<template id="__bundler_thumbnail" data-bg-color="#f6f4ef">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#f6f4ef"/>
+    <g transform="translate(360,200)">
+      <rect x="0" y="0" width="480" height="60" rx="4" fill="#1a1a17"/>
+      <rect x="0" y="80" width="320" height="32" rx="4" fill="#4a4a45"/>
+      <rect x="0" y="140" width="200" height="200" rx="8" fill="#d65a31"/>
+      <rect x="220" y="140" width="120" height="200" rx="8" fill="#2a3f2e"/>
+      <rect x="360" y="140" width="120" height="200" rx="8" fill="#d9c9a8"/>
+      <text x="0" y="400" font-family="serif" font-style="italic" font-size="48" fill="#d65a31">MAAKM.shop</text>
+    </g>
+  </svg>
+</template>
+<style>
+:root {
+  --bg: #f6f4ef; --bg-2: #efebe2; --ink: #1a1a17; --ink-2: #4a4a45; --ink-3: #8a8a82;
+  --line: #d9d4c7; --line-2: #ebe6db; --accent: #d65a31; --accent-2: #2a3f2e; --paper: #ffffff;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+body { font-family: "Inter Tight", Helvetica, Arial, sans-serif; font-size: 15px; line-height: 1.55; }
+.mono { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); }
+.serif { font-family: "Instrument Serif", serif; font-style: italic; font-weight: 400; }
+code { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 12px; background: var(--bg-2); padding: 2px 6px; border-radius: 4px; color: var(--ink); }
+pre { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 12px; background: var(--ink); color: #efebe2; padding: 18px 20px; border-radius: 8px; overflow-x: auto; line-height: 1.55; }
+pre .k { color: #d65a31; } pre .v { color: #b3d6a0; } pre .c { color: #8a8a82; }
+a { color: inherit; }
+
+/* Layout */
+.page { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+aside.toc { border-right: 1px solid var(--line); padding: 32px 24px; position: sticky; top: 0; align-self: start; height: 100vh; overflow-y: auto; }
+aside.toc .brand { font-weight: 600; letter-spacing: -0.02em; font-size: 17px; margin-bottom: 24px; }
+aside.toc .brand .dot { color: var(--accent); }
+aside.toc h6 { font-family: "JetBrains Mono", monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin: 18px 0 8px; }
+aside.toc a { display: block; padding: 5px 0; font-size: 13px; color: var(--ink-2); text-decoration: none; border-left: 2px solid transparent; padding-left: 10px; margin-left: -10px; }
+aside.toc a:hover { color: var(--ink); }
+main { padding: 48px 56px; max-width: 1100px; }
+
+/* Hero */
+.hero { padding-bottom: 48px; border-bottom: 1px solid var(--line); margin-bottom: 56px; }
+.hero h1 { font-size: clamp(40px, 5vw, 64px); line-height: 1.0; letter-spacing: -0.035em; font-weight: 500; max-width: 16ch; }
+.hero p { font-size: 17px; color: var(--ink-2); margin-top: 18px; max-width: 60ch; }
+.hero .meta { display: flex; gap: 24px; margin-top: 28px; }
+.hero .meta div { padding-top: 12px; border-top: 1px solid var(--line); flex: 1; max-width: 180px; }
+.hero .meta .v { font-size: 22px; font-weight: 500; letter-spacing: -0.02em; }
+.hero .meta .l { font-family: "JetBrains Mono", monospace; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); margin-top: 4px; }
+
+section { padding: 56px 0; border-bottom: 1px solid var(--line); }
+section:last-child { border-bottom: 0; }
+section > h2 { font-size: 32px; line-height: 1.05; letter-spacing: -0.025em; font-weight: 500; margin-bottom: 6px; }
+section > h2 .num { color: var(--ink-3); margin-right: 12px; font-weight: 400; }
+section > .lead { color: var(--ink-2); font-size: 16px; margin-bottom: 32px; max-width: 60ch; }
+h3.sub { font-size: 18px; font-weight: 500; letter-spacing: -0.01em; margin-top: 36px; margin-bottom: 12px; }
+
+.tile { background: var(--paper); border: 1px solid var(--line); border-radius: 8px; padding: 20px; }
+
+/* Color */
+.swatch-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.swatch { background: var(--paper); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.swatch .chip { height: 88px; }
+.swatch .meta { padding: 12px 14px; }
+.swatch .name { font-size: 14px; font-weight: 500; }
+.swatch .val { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--ink-3); margin-top: 2px; }
+
+/* Type scale */
+.typescale { display: flex; flex-direction: column; }
+.typerow { display: grid; grid-template-columns: 200px 1fr; gap: 20px; padding: 18px 0; border-top: 1px solid var(--line-2); align-items: baseline; }
+.typerow .name { font-family: "JetBrains Mono", monospace; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); }
+.typerow .name span { display: block; color: var(--ink-2); margin-top: 4px; }
+
+/* Spacing */
+.spacing-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 12px; }
+.sp { background: var(--paper); border: 1px solid var(--line); border-radius: 6px; padding: 12px; text-align: center; }
+.sp .box { background: var(--accent); height: 8px; border-radius: 2px; margin: 0 auto; }
+.sp .name { font-family: "JetBrains Mono", monospace; font-size: 10px; color: var(--ink-3); margin-top: 8px; letter-spacing: 0.04em; text-transform: uppercase; }
+.sp .val { font-size: 13px; font-weight: 500; margin-top: 2px; }
+
+/* Component specimens */
+.specimen { background: var(--paper); border: 1px solid var(--line); border-radius: 8px; padding: 32px; margin-bottom: 16px; }
+.specimen .row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 999px; border: 1px solid var(--ink); background: var(--ink); color: var(--bg); font: inherit; font-size: 14px; font-weight: 500; cursor: pointer; }
+.btn.ghost { background: transparent; color: var(--ink); }
+.btn.accent { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn.icon-only { width: 40px; height: 40px; padding: 0; justify-content: center; }
+.btn.icon-only.outline { background: var(--paper); color: var(--ink); border-color: var(--line); }
+
+.chip { display: inline-flex; gap: 6px; padding: 5px 10px; border: 1px solid var(--line); border-radius: 999px; font-family: "JetBrains Mono", monospace; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; background: var(--paper); color: var(--ink-2); }
+.tag { font-family: "JetBrains Mono", monospace; font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); padding: 3px 7px; border: 1px solid var(--line); border-radius: 4px; background: var(--paper); }
+
+input.field, select.field { font: inherit; padding: 12px 14px; border: 1px solid var(--line); border-radius: 6px; background: var(--paper); width: 100%; }
+input.field:focus { outline: none; border-color: var(--ink); }
+
+.card-pc { display: flex; flex-direction: column; gap: 12px; max-width: 260px; }
+.card-pc .img { aspect-ratio: 4/5; border-radius: 6px; background: linear-gradient(135deg, #d9c9a8, #c1ad84); position: relative; overflow: hidden; }
+.card-pc .img::after { content:''; position: absolute; inset: 0; background-image: repeating-linear-gradient(45deg, rgba(0,0,0,0.03) 0 2px, transparent 2px 14px); }
+.card-pc .meta { display: flex; justify-content: space-between; }
+.card-pc .title { font-size: 15px; font-weight: 500; }
+.card-pc .sub { font-size: 12px; color: var(--ink-3); margin-top: 2px; }
+.card-pc .price { font-size: 14px; font-weight: 500; }
+
+/* Patterns */
+.do-dont { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+.do, .dont { padding: 18px 20px; border-radius: 8px; font-size: 14px; line-height: 1.55; }
+.do { background: #e8f0e6; border: 1px solid #c4d6c0; }
+.dont { background: #f7e4dd; border: 1px solid #e3bfb1; }
+.do strong, .dont strong { font-family: "JetBrains Mono", monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 6px; }
+.do strong { color: #2a5a28; } .dont strong { color: #8a3a1c; }
+
+table.tbl { width: 100%; border-collapse: collapse; font-size: 14px; }
+table.tbl th, table.tbl td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line-2); vertical-align: top; }
+table.tbl th { font-family: "JetBrains Mono", monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); font-weight: 500; }
+table.tbl td.k { font-family: "JetBrains Mono", monospace; font-size: 12px; color: var(--accent); width: 220px; }
+
+.principle { display: grid; grid-template-columns: 60px 1fr; gap: 24px; padding: 24px 0; border-top: 1px solid var(--line-2); }
+.principle .num { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--ink-3); letter-spacing: 0.06em; }
+.principle h4 { font-size: 22px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.15; }
+.principle p { color: var(--ink-2); margin-top: 6px; max-width: 60ch; }
+
+</style>
+</head>
+<body>
+<div class="page">
+
+<aside class="toc">
+  <div class="brand">MAAKM<span class="dot">.</span>shop</div>
+  <div class="mono" style="font-size:10px">Pattern library</div>
+
+  <h6>Foundations</h6>
+  <a href="#principles">Principles</a>
+  <a href="#color">Color</a>
+  <a href="#type">Typography</a>
+  <a href="#space">Spacing &amp; radius</a>
+  <a href="#voice">Voice &amp; tone</a>
+
+  <h6>Components</h6>
+  <a href="#buttons">Buttons</a>
+  <a href="#chips">Chips &amp; tags</a>
+  <a href="#forms">Form fields</a>
+  <a href="#card">Product card</a>
+  <a href="#section">Section header</a>
+
+  <h6>Patterns</h6>
+  <a href="#layout">Layout grid</a>
+  <a href="#imagery">Imagery</a>
+  <a href="#motion">Motion</a>
+  <a href="#tokens">Tokens (CSS)</a>
+</aside>
+
+<main>
+
+<header class="hero">
+  <div class="mono" style="margin-bottom:18px">Design pattern · v1.0 · Apr 2026</div>
+  <h1>An editorial system for <span class="serif" style="color:var(--accent)">on-demand</span> objects.</h1>
+  <p>This document captures the visual and interaction patterns used across MAAKM.shop. Use it as a reference when implementing new pages, building components, or extending the catalog. Every pattern here is already in production code.</p>
+  <div class="meta">
+    <div><div class="v">3</div><div class="l">Type families</div></div>
+    <div><div class="v">8</div><div class="l">Color tokens</div></div>
+    <div><div class="v">6</div><div class="l">Spacing steps</div></div>
+    <div><div class="v">12</div><div class="l">Components</div></div>
+  </div>
+</header>
+
+<section id="principles">
+  <h2><span class="num">01</span>Principles</h2>
+  <p class="lead">Five rules that hold the system together. When a decision feels unclear, return to these.</p>
+
+  <div class="principle"><div class="num">01</div><div><h4>Quiet by default, loud on accent.</h4><p>The page rests in warm neutrals. Color is reserved for the one thing that matters most on the screen — a CTA, a price, a serif highlight. Never two accents in the same viewport.</p></div></div>
+  <div class="principle"><div class="num">02</div><div><h4>Photography over illustration.</h4><p>Real product photography, never SVG mockups in production. Placeholders only exist to hold layout while imagery is being shot.</p></div></div>
+  <div class="principle"><div class="num">03</div><div><h4>Editorial spacing.</h4><p>Generous vertical rhythm (56–80px between sections). Headlines have room to breathe. Tight density only inside cards and tables.</p></div></div>
+  <div class="principle"><div class="num">04</div><div><h4>Mixed type voice.</h4><p>Sans-serif for body and UI, italic serif for emphasis inside headlines. The serif is a punctuation mark — one or two phrases per page, never a full headline.</p></div></div>
+  <div class="principle"><div class="num">05</div><div><h4>Honest about production.</h4><p>The shop is print-on-demand. Reflect that everywhere: lead times on cards, "no waste" notes at checkout, real material names instead of marketing labels.</p></div></div>
+</section>
+
+<section id="color">
+  <h2><span class="num">02</span>Color</h2>
+  <p class="lead">A warm-paper palette with one accent. The neutrals do most of the work; the accent appears on CTAs, prices, and italic phrases.</p>
+
+  <h3 class="sub">Surface &amp; ink</h3>
+  <div class="swatch-grid">
+    <div class="swatch"><div class="chip" style="background:#f6f4ef"></div><div class="meta"><div class="name">Bg / paper</div><div class="val">--bg · #F6F4EF</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#efebe2"></div><div class="meta"><div class="name">Bg-2 / footer</div><div class="val">--bg-2 · #EFEBE2</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#ffffff;border-bottom:1px solid var(--line)"></div><div class="meta"><div class="name">Paper / cards</div><div class="val">--paper · #FFFFFF</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#1a1a17"></div><div class="meta"><div class="name">Ink</div><div class="val">--ink · #1A1A17</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#4a4a45"></div><div class="meta"><div class="name">Ink-2 / body</div><div class="val">--ink-2 · #4A4A45</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#8a8a82"></div><div class="meta"><div class="name">Ink-3 / muted</div><div class="val">--ink-3 · #8A8A82</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#d9d4c7"></div><div class="meta"><div class="name">Line</div><div class="val">--line · #D9D4C7</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#ebe6db"></div><div class="meta"><div class="name">Line-2 / soft</div><div class="val">--line-2 · #EBE6DB</div></div></div>
+  </div>
+
+  <h3 class="sub">Accent</h3>
+  <div class="swatch-grid">
+    <div class="swatch"><div class="chip" style="background:#d65a31"></div><div class="meta"><div class="name">Accent · Terracotta</div><div class="val">--accent · #D65A31</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#2a3f2e"></div><div class="meta"><div class="name">Accent-2 · Moss</div><div class="val">--accent-2 · #2A3F2E</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#3a8a4a"></div><div class="meta"><div class="name">Alt · Forest</div><div class="val">themeable</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#2a5fcc"></div><div class="meta"><div class="name">Alt · Cobalt</div><div class="val">themeable</div></div></div>
+  </div>
+
+  <div class="do-dont">
+    <div class="do"><strong>Do</strong>One accent visible per viewport. Use it for the primary CTA, the current price, or the italic-serif phrase in a headline.</div>
+    <div class="dont"><strong>Don't</strong>Color filled cards or alternating backgrounds. Color icons by default. Use the accent inside body copy.</div>
+  </div>
+</section>
+
+<section id="type">
+  <h2><span class="num">03</span>Typography</h2>
+  <p class="lead">Three families. Inter Tight for everything, Instrument Serif (italic) for emphasis, JetBrains Mono for kickers and meta data.</p>
+
+  <div class="specimen">
+    <div class="typescale">
+      <div class="typerow">
+        <div class="name">H1 / Hero<span>Inter Tight 500 · 96/96 · -3.5%</span></div>
+        <div style="font-size:64px; line-height:0.96; letter-spacing:-0.035em; font-weight:500">Objecten van <span class="serif" style="color:var(--accent)">echte</span> kwaliteit.</div>
+      </div>
+      <div class="typerow">
+        <div class="name">H2 / Section<span>Inter Tight 500 · 48/48 · -3%</span></div>
+        <div style="font-size:40px; line-height:1.0; letter-spacing:-0.03em; font-weight:500">Drie materialen. <span class="serif">Eindeloos.</span></div>
+      </div>
+      <div class="typerow">
+        <div class="name">H3 / Card<span>Inter Tight 500 · 22/26 · -2%</span></div>
+        <div style="font-size:22px; line-height:1.15; letter-spacing:-0.02em; font-weight:500">Helix Vaas — geometrische tafelvaas</div>
+      </div>
+      <div class="typerow">
+        <div class="name">Body<span>Inter Tight 400 · 16/24 · 0</span></div>
+        <div style="font-size:16px; color:var(--ink-2); max-width:60ch">Een gecureerde shop met objecten uit onze studio. Elk product wordt op bestelling geprint in jouw kleur en materiaal — geen voorraad, geen verspilling.</div>
+      </div>
+      <div class="typerow">
+        <div class="name">Small<span>Inter Tight 400 · 13/18</span></div>
+        <div style="font-size:13px; color:var(--ink-3)">Levertijd 3–5 dagen · gratis verzending vanaf €50</div>
+      </div>
+      <div class="typerow">
+        <div class="name">Mono / Kicker<span>JetBrains Mono 400 · 11px · uppercase · +6%</span></div>
+        <div class="mono">Bestellen · Catalogus · Sinds 2024</div>
+      </div>
+      <div class="typerow">
+        <div class="name">Serif accent<span>Instrument Serif italic · matches headline size</span></div>
+        <div style="font-size:32px; line-height:1.0; font-weight:500"><span class="serif" style="color:var(--accent)">Wij printen het.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="do-dont">
+    <div class="do"><strong>Do</strong>Wrap one or two phrases inside a headline in <code>.serif</code> for editorial emphasis. Use mono for tiny kickers and meta only.</div>
+    <div class="dont"><strong>Don't</strong>Set body copy or buttons in mono. Use the serif italic for full headlines, paragraphs, or as a default style.</div>
+  </div>
+</section>
+
+<section id="space">
+  <h2><span class="num">04</span>Spacing &amp; radius</h2>
+  <p class="lead">A 4-based scale. Gaps inside cards stay tight (12–24); section padding is generous (56–80).</p>
+
+  <div class="spacing-grid">
+    <div class="sp"><div class="box" style="width:4px"></div><div class="name">2xs</div><div class="val">4</div></div>
+    <div class="sp"><div class="box" style="width:8px"></div><div class="name">xs</div><div class="val">8</div></div>
+    <div class="sp"><div class="box" style="width:12px"></div><div class="name">sm</div><div class="val">12</div></div>
+    <div class="sp"><div class="box" style="width:16px"></div><div class="name">md</div><div class="val">16</div></div>
+    <div class="sp"><div class="box" style="width:24px"></div><div class="name">lg</div><div class="val">24</div></div>
+    <div class="sp"><div class="box" style="width:32px"></div><div class="name">xl</div><div class="val">32</div></div>
+    <div class="sp"><div class="box" style="width:56px"></div><div class="name">2xl</div><div class="val">56</div></div>
+    <div class="sp"><div class="box" style="width:80px"></div><div class="name">3xl</div><div class="val">80</div></div>
+  </div>
+
+  <h3 class="sub">Radius</h3>
+  <table class="tbl">
+    <tr><td class="k">--r-xs · 4px</td><td>Tags, color swatches inside cards</td></tr>
+    <tr><td class="k">--r-sm · 6px</td><td>Inputs, small image thumbnails, soft buttons</td></tr>
+    <tr><td class="k">--r-md · 8px</td><td>Cards, product imagery, section panels</td></tr>
+    <tr><td class="k">--r-lg · 12px</td><td>Hero banners, large CTA blocks</td></tr>
+    <tr><td class="k">--r-pill · 999px</td><td>Buttons, chips, qty steppers, icon-buttons</td></tr>
+  </table>
+</section>
+
+<section id="voice">
+  <h2><span class="num">05</span>Voice &amp; tone</h2>
+  <p class="lead">Dutch-first, direct, never over-promising. Speak like a studio that makes things, not a brand that sells things.</p>
+
+  <table class="tbl">
+    <tr><th>Say</th><th>Don't say</th></tr>
+    <tr><td>Op bestelling geprint</td><td>Made-to-order luxury</td></tr>
+    <tr><td>Levertijd 3–5 dagen</td><td>Snel verzonden</td></tr>
+    <tr><td>Wij printen het</td><td>Onbeperkte mogelijkheden</td></tr>
+    <tr><td>Lokaal · Eindhoven</td><td>Premium European craftsmanship</td></tr>
+    <tr><td>Geen voorraad, geen verspilling</td><td>Sustainable luxury experience</td></tr>
+  </table>
+</section>
+
+<section id="buttons">
+  <h2><span class="num">06</span>Buttons</h2>
+  <p class="lead">Three intents — primary (ink), accent (terracotta, conversion), ghost (secondary). All pill-shaped. Icon-buttons are circular.</p>
+  <div class="specimen">
+    <div class="row">
+      <button class="btn">Primary</button>
+      <button class="btn accent">Accent · In winkelmand</button>
+      <button class="btn ghost">Ghost</button>
+      <button class="btn icon-only outline" aria-label="cart"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.5 12h11l2-9H6"/><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/></svg></button>
+    </div>
+  </div>
+  <table class="tbl">
+    <tr><th>Variant</th><th>Use for</th></tr>
+    <tr><td class="k">.btn (primary)</td><td>Default action — "Bekijk shop", "Doorgaan", in-page navigation</td></tr>
+    <tr><td class="k">.btn.accent</td><td>Conversion — Add to cart, place order, submit briefing. Max one per viewport.</td></tr>
+    <tr><td class="k">.btn.ghost</td><td>Secondary or destructive-light — "Terug", "Reset filters"</td></tr>
+    <tr><td class="k">.icon-btn</td><td>40×40 circular utility — search, account, cart</td></tr>
+  </table>
+</section>
+
+<section id="chips">
+  <h2><span class="num">07</span>Chips &amp; tags</h2>
+  <p class="lead">Two metadata patterns. Chips are user-facing labels (mono, bordered). Tags are intra-card classifications (mono, smaller).</p>
+  <div class="specimen">
+    <div class="row">
+      <span class="chip">Bestseller</span>
+      <span class="chip">Set 2</span>
+      <span class="chip"><span style="width:6px;height:6px;border-radius:99px;background:#3a8a4a;display:inline-block"></span>Voorraad real-time</span>
+    </div>
+    <div class="row" style="margin-top:14px">
+      <span class="tag">PETG</span>
+      <span class="tag">Premium</span>
+      <span class="tag">Maatwerk</span>
+    </div>
+  </div>
+</section>
+
+<section id="forms">
+  <h2><span class="num">08</span>Form fields</h2>
+  <p class="lead">All inputs share one style. Mono labels above; 6px radius; focus state swaps border to ink.</p>
+  <div class="specimen" style="max-width:480px">
+    <div style="display:flex; flex-direction:column; gap:14px">
+      <div>
+        <div class="mono" style="margin-bottom:6px">E-mailadres</div>
+        <input class="field" placeholder="naam@voorbeeld.nl"/>
+      </div>
+      <div>
+        <div class="mono" style="margin-bottom:6px">Land</div>
+        <select class="field"><option>Nederland</option><option>België</option><option>Duitsland</option></select>
+      </div>
+      <div>
+        <div class="mono" style="margin-bottom:6px">Postcode</div>
+        <input class="field" placeholder="1234 AB"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="card">
+  <h2><span class="num">09</span>Product card</h2>
+  <p class="lead">The atomic unit of the catalog. Image first (4:5 ratio), then meta in a two-column flex (title left, price right), then color swatches.</p>
+  <div class="specimen">
+    <div class="card-pc">
+      <div class="img"></div>
+      <div class="meta">
+        <div>
+          <div class="title">Helix Vaas</div>
+          <div class="sub">Geometrische tafelvaas</div>
+          <div style="display:flex; gap:6px; margin-top:6px"><span class="tag">Bestseller</span><span class="tag">PETG</span></div>
+        </div>
+        <div class="price">€34</div>
+      </div>
+      <div style="display:flex; gap:6px">
+        <span style="width:14px;height:14px;border-radius:99px;background:#d9c9a8;border:1px solid rgba(0,0,0,0.1)"></span>
+        <span style="width:14px;height:14px;border-radius:99px;background:#c75a3c;border:1px solid rgba(0,0,0,0.1)"></span>
+        <span style="width:14px;height:14px;border-radius:99px;background:#ece4d3;border:1px solid rgba(0,0,0,0.1)"></span>
+        <span style="width:14px;height:14px;border-radius:99px;background:#3a4a37;border:1px solid rgba(0,0,0,0.1)"></span>
+      </div>
+    </div>
+  </div>
+  <table class="tbl">
+    <tr><td class="k">Image ratio</td><td>4:5 — taller than wide. Always object-fit: cover.</td></tr>
+    <tr><td class="k">Hover</td><td>Image scales 1.005 over 0.3s ease.</td></tr>
+    <tr><td class="k">Color dots</td><td>14×14 circles. Show first 5; if more, append <code>+N</code> in mono.</td></tr>
+    <tr><td class="k">Tags</td><td>Show 1 marketing tag (Bestseller / Nieuw) and the material tag (PETG / PLA / ASA). Never more.</td></tr>
+  </table>
+</section>
+
+<section id="section">
+  <h2><span class="num">10</span>Section header</h2>
+  <p class="lead">A three-column grid: number kicker (left), title (center, can flex-grow), link (right). Sits on a top border, never a heavy bar.</p>
+  <div class="specimen">
+    <div style="display:grid; grid-template-columns:auto 1fr auto; gap:24px; align-items:end; padding:32px 0; border-top: 1px solid var(--line)">
+      <div class="mono">01 — Bestsellers</div>
+      <div style="font-size:32px; line-height:1.0; letter-spacing:-0.025em; font-weight:500">De favorieten <span class="serif" style="color:var(--ink-3)">uit onze shop</span></div>
+      <a href="#" style="font-size:13px; color:var(--ink-2); border-bottom:1px solid var(--ink-3); padding-bottom:2px; text-decoration:none">Bekijk alles →</a>
+    </div>
+  </div>
+  <div class="do-dont">
+    <div class="do"><strong>Do</strong>Use the numbered kicker on top-level homepage sections. Drop it on detail pages and sub-sections — they get a plain title.</div>
+    <div class="dont"><strong>Don't</strong>Number every section everywhere. Keep numbering to the homepage flow (01–04 max).</div>
+  </div>
+</section>
+
+<section id="layout">
+  <h2><span class="num">11</span>Layout grid</h2>
+  <p class="lead">A single max-width container at 1440px with 28px gutters. Inside it, content uses 12-col grid logic but most layouts use simple flex/grid with explicit fr ratios.</p>
+  <table class="tbl">
+    <tr><th>Use</th><th>Grid</th></tr>
+    <tr><td>Catalog grid (Shop)</td><td>3 columns × 24px gap, with 260px sidebar at 48px gap</td></tr>
+    <tr><td>Featured grid (Home)</td><td>4 columns × 24px gap</td></tr>
+    <tr><td>PDP</td><td>1.3fr / 1fr — gallery left, info right (sticky)</td></tr>
+    <tr><td>Checkout</td><td>1.3fr / 1fr — form left, summary right (sticky)</td></tr>
+    <tr><td>Hero collage</td><td>2fr / 1fr — primary photo left, two stacked photos right</td></tr>
+    <tr><td>Footer</td><td>2fr / 1fr / 1fr / 1fr — brand block first, then 3 link cols</td></tr>
+  </table>
+</section>
+
+<section id="imagery">
+  <h2><span class="num">12</span>Imagery</h2>
+  <p class="lead">Real product photography on neutral backgrounds. Warm window light, slight shadow, never floating-on-white.</p>
+  <div class="do-dont">
+    <div class="do"><strong>Do</strong>Photograph products on warm neutral surfaces (linen, plaster, sand). Use natural light. Show one item per shot in cards; lifestyle context in hero.</div>
+    <div class="dont"><strong>Don't</strong>Use AI-generated imagery, e-commerce floating-on-white, or 3D renders pretending to be photos.</div>
+  </div>
+</section>
+
+<section id="motion">
+  <h2><span class="num">13</span>Motion</h2>
+  <p class="lead">Fast, modest, never decorative. Three durations. No springs, no parallax.</p>
+  <table class="tbl">
+    <tr><th>Token</th><th>Use</th></tr>
+    <tr><td class="k">150ms ease</td><td>Hover states (button lift, card image scale)</td></tr>
+    <tr><td class="k">250ms ease</td><td>Drawer overlay fade, toast in/out</td></tr>
+    <tr><td class="k">300ms cubic-bezier(.2,.7,.2,1)</td><td>Cart drawer slide-in</td></tr>
+    <tr><td class="k">40s linear infinite</td><td>Marquee strip on homepage</td></tr>
+  </table>
+</section>
+
+<section id="tokens">
+  <h2><span class="num">14</span>Tokens — drop-in CSS</h2>
+  <p class="lead">Copy this into a <code>tokens.css</code> in your frontend. Everything in the system resolves through these custom properties.</p>
+<pre><span class="c">/* MAAKM design tokens · v1.0 */</span>
+:root {
+  <span class="c">/* surface */</span>
+  <span class="k">--bg</span>: <span class="v">#F6F4EF</span>;
+  <span class="k">--bg-2</span>: <span class="v">#EFEBE2</span>;
+  <span class="k">--paper</span>: <span class="v">#FFFFFF</span>;
+
+  <span class="c">/* ink */</span>
+  <span class="k">--ink</span>: <span class="v">#1A1A17</span>;
+  <span class="k">--ink-2</span>: <span class="v">#4A4A45</span>;
+  <span class="k">--ink-3</span>: <span class="v">#8A8A82</span>;
+
+  <span class="c">/* lines */</span>
+  <span class="k">--line</span>: <span class="v">#D9D4C7</span>;
+  <span class="k">--line-2</span>: <span class="v">#EBE6DB</span>;
+
+  <span class="c">/* accent (themeable) */</span>
+  <span class="k">--accent</span>: <span class="v">#D65A31</span>;
+  <span class="k">--accent-2</span>: <span class="v">#2A3F2E</span>;
+
+  <span class="c">/* type */</span>
+  <span class="k">--font-sans</span>: <span class="v">"Inter Tight"</span>, system-ui, sans-serif;
+  <span class="k">--font-serif</span>: <span class="v">"Instrument Serif"</span>, serif;
+  <span class="k">--font-mono</span>: <span class="v">"JetBrains Mono"</span>, ui-monospace, monospace;
+
+  <span class="c">/* spacing */</span>
+  <span class="k">--s-2xs</span>: <span class="v">4px</span>;  <span class="k">--s-xs</span>: <span class="v">8px</span>;
+  <span class="k">--s-sm</span>:  <span class="v">12px</span>; <span class="k">--s-md</span>: <span class="v">16px</span>;
+  <span class="k">--s-lg</span>:  <span class="v">24px</span>; <span class="k">--s-xl</span>: <span class="v">32px</span>;
+  <span class="k">--s-2xl</span>: <span class="v">56px</span>; <span class="k">--s-3xl</span>: <span class="v">80px</span>;
+
+  <span class="c">/* radius */</span>
+  <span class="k">--r-xs</span>: <span class="v">4px</span>;  <span class="k">--r-sm</span>: <span class="v">6px</span>;
+  <span class="k">--r-md</span>: <span class="v">8px</span>;  <span class="k">--r-lg</span>: <span class="v">12px</span>;
+  <span class="k">--r-pill</span>: <span class="v">999px</span>;
+
+  <span class="c">/* motion */</span>
+  <span class="k">--ease</span>: <span class="v">cubic-bezier(.2,.7,.2,1)</span>;
+  <span class="k">--d-fast</span>: <span class="v">150ms</span>;
+  <span class="k">--d-base</span>: <span class="v">250ms</span>;
+  <span class="k">--d-slow</span>: <span class="v">300ms</span>;
+}
+
+<span class="c">/* one global rule the rest of the app inherits from */</span>
+body {
+  background: <span class="k">var(--bg)</span>;
+  color: <span class="k">var(--ink)</span>;
+  font-family: <span class="k">var(--font-sans)</span>;
+}
+</pre>
+
+  <h3 class="sub">Implementation notes</h3>
+  <ul style="color:var(--ink-2); padding-left:20px; line-height:1.7">
+    <li><strong>Framework agnostic.</strong> Tokens are plain CSS variables — works in React, Vue, Svelte, plain HTML. Tailwind users: paste into <code>theme.extend</code> or use <code>@theme</code> in v4.</li>
+    <li><strong>Theme switching</strong> works by overriding <code>--accent</code> and <code>--accent-2</code> on the <code>html</code> element.</li>
+    <li><strong>Fonts</strong> load from Google Fonts: <code>Inter+Tight:wght@400;500;600&amp;family=Instrument+Serif:ital@0;1&amp;family=JetBrains+Mono:wght@400;500</code>.</li>
+    <li><strong>Iconography</strong> uses Lucide-style line icons at 1.5px stroke. Keep stroke weight consistent across all icons in a single viewport.</li>
+  </ul>
+</section>
+
+</main>
+</div>
+</body>
+</html>
