@@ -1,0 +1,8 @@
+# Local env (Shopify credentials needed for `nuxt dev`)
+.env
+.env.*
+
+# Installed deps — skip a fresh `pnpm install` per worktree.
+# pnpm's node_modules uses relative symlinks into node_modules/.pnpm,
+# so the tree is self-contained and safe to copy.
+node_modules/
